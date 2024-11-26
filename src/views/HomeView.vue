@@ -1,9 +1,25 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import TodoItem from '@/components/TodoItem.vue';
+import { ref } from 'vue';
+
+import { useNotifications } from '@/stores/notifications';
+const message = "hellow"
+const refDone = ref(false)
+
+const {notifications} = useNotifications()
+
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <TodoItem :name="message" v-model:readModel="refDone"/>
+    <div v-if="refDone" >Done</div>
+    <div>
+      <ol v-for="item in notifications" :key="item.id">
+        <div>{{ item.message }}</div>
+
+      </ol>
+
+    </div>
   </main>
 </template>
