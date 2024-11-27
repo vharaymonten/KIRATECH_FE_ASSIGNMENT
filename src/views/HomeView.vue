@@ -118,7 +118,7 @@ const changeSortOrder = () => {
       <!-- Sort Button -->
       <button
         @click="changeSortOrder"
-        class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 focus:ring focus:ring-blue-300 focus:outline-none"
+        class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
       >
         {{ sortSearch.isAsc ? 'Asc' : 'Desc' }}
       </button>
