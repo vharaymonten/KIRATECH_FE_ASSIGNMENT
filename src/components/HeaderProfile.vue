@@ -18,7 +18,7 @@
   
         <!-- Action Buttons -->
         <div class="flex space-x-4">
-          <a class="bg-white text-blue-500 px-4 py-2 rounded-lg shadow-md hover:bg-gray-100" href="https://www.linkedin.com/in/jivha/?originalSubdomain=id">Add Friend</a>
+          <a class="bg-white text-blue-500 px-4 py-2 rounded-lg shadow-md hover:bg-gray-100">Add Friend</a>
         </div>
       </div>
     </div>
