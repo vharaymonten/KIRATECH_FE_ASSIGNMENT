@@ -43,13 +43,22 @@ const sortSearchFn = (users: RandomUser[]) => {
   return sortedUsers
 }
 
+const isFetching = ref(false)
+
 const fetchFn = async (props: APISearchProp) => {
   try {
+    isFetching.value = true
     const data = (await axios.get('/api/', { params: { ...props, results: 10 } }))
       .data as RandomUserAPIRepsonse
     setRandomUsers(transformRandomUserApiResponse(data))
   } catch (e) {
-    console.error('Error on onMounted ; ', e)
+    if (`${import.meta.env.DEV}`) {
+      console.error('Error on onFetching Logic  ; ', e)
+    }
+  } finally {
+    setTimeout(() => {
+      isFetching.value = false
+    }, 500)
   }
 }
 onMounted(async () => {
@@ -76,7 +85,7 @@ const changeSortOrder = () => {
 
 <template>
   <div id="header">
-    <HeaderProfile/>
+    <HeaderProfile />
   </div>
   <div>
     <div class="flex items-center space-x-2 mb-4">
@@ -117,18 +126,21 @@ const changeSortOrder = () => {
 
     <div class="flex flex-1 gap-2">
       <button
+        :disabled="isFetching"
         @click="() => pagination(false)"
         class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
       >
         Prev Page
       </button>
       <button
+        :disabled="isFetching"
         @click="() => pagination(true)"
         class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
       >
         Next Page
       </button>
       <button
+        :disabled="isFetching"
         @click="refresh"
         class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
       >
@@ -136,6 +148,13 @@ const changeSortOrder = () => {
       </button>
     </div>
     <span class="p-4">Current Page {{ searchParams?.page || 1 }}</span>
+    <div class="relative inline-block" v-show="isFetching">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-4 h-4 rounded-full bg-blue-500 animate-ping"></div>
+      </div>
+      <span class="text-sm">fetching...</span>
+    </div>
+
     <TableUserCard v-bind:randomUsers="sortSearchFn(randomusers)" />
   </div>
 </template>
