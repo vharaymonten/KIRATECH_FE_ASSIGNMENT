@@ -23,11 +23,9 @@ defineProps<{toggle: ()=> void, detail: RandomUser| null}>()
       </div>
       <div class="flex justify-center">
         <img class="rounded" v-bind:src="detail?.thumbnail" alt="Default avatar">
-
       </div>
 
-
-      <div class="space-y-">
+      <div class="space-y-4">
         <p><strong>Date:</strong> {{ dayjs(detail?.dob).format("YYYY-MM-DD") }}</p>
         <p><strong>Status:</strong> {{ detail?.status }}</p>
         <p><strong>Gender:</strong> {{ detail?.gender }}</p>
